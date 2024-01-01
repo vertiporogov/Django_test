@@ -1,0 +1,20 @@
+{#{% load my_tags %}#}
+{%  extends 'main/base.html'%}
+
+{% block content %}
+    <div class="container">
+        <div class="card mb-4 box-shadow ">
+            <div class="card-header d-flex align-items-center justify-content-center h-80">
+                <h5 class="my-0 font-weight-normal text-truncate">материал "{{ object|title }}" ({{ object.slug }})</h5>
+            </div>
+            <div class="card-body">
+                  <p>
+                      {{ object.body }}
+                  </p>
+            </div>
+            <div class="card-footer">
+                Просмотры: {{ object.views_count }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
