@@ -1,27 +1,12 @@
-from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy, reverse
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from main.models import Student
 
 
 class StudentListView(ListView):
     model = Student
-    template_name = 'main/index.html'
-    extra_context = {
-        'title': 'Главная'
-    }
-
-# def index(request):
-#     students_list = Student.objects.all()
-#
-#     context = {
-#         'object_list': students_list,
-#         'title': "Главная",
-#     }
-#
-#     return render(request, 'main/index.html', context)
-
-
 
 
 def contact(request):
@@ -39,16 +24,34 @@ def contact(request):
     return render(request, 'main/contact.html', context)
 
 
-
-
 class StudentDetailsView(DetailView):
     model = Student
-    template_name = "main/student_detail.html"
 
-# def view_student(request, pk):
-#     student_item = get_object_or_404(Student, pk=pk)
-#     context = {
-#         'object': student_item,
-#     }
-#     return render(request, "main/student_detail.html", context)
 
+class StudentCreateView(CreateView):
+    model = Student
+    fields = ('first_name', 'last_name', 'avatar')
+    success_url = reverse_lazy('main:index')
+
+
+class StudentUpdateView(UpdateView):
+    model = Student
+    fields = ('first_name', 'last_name', 'avatar')
+    success_url = reverse_lazy('main:index')
+
+
+class StudentDeleteView(DeleteView):
+    model = Student
+    success_url = reverse_lazy('main:index')
+
+
+def toggle_activity(request, pk):
+    student_item = get_object_or_404(Student, pk=pk)
+    if student_item.is_activ:
+        student_item.is_activ = False
+    else:
+        student_item.is_activ = True
+
+    student_item.save()
+
+    return redirect(reverse('main:index'))
