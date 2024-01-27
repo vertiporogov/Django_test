@@ -4,15 +4,39 @@
 <div class="col-12">
     <div class="row">
         <div class="col-6">
-            <div class="card">
-                <div class="card-body">
-                    <form method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <button type="submit" class="btn btn-primary">Создать</button>
-                    </form>
+            <form method="post" enctype="multipart/form-data">
+
+                <div class="card">
+                    <div class="card-body">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                        {% if object %}
+                            <button type="submit" class="btn btn-primary">Добавить</button>
+                        {% else %}
+                            <button type="submit" class="btn btn-primary">Создать</button>
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
+            </form>
+
+        </div>
+        <div class="col-6">
+            <form method="post" enctype="multipart/form-data">
+
+                <div class="card">
+                    <div class="card-body">
+                        {% csrf_token %}
+                        {{ formset.menegement_form }}
+                        {% for form in formset.forms %}
+                            {{ form.as_p }}
+                            {% if not forloop.last %}
+                            <hr>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>
