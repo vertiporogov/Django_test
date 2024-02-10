@@ -34,5 +34,19 @@
                 </div>
             </div>
         </div>
+        <div class="card mb-4 box-shadow ">
+            <div class="card-header d-flex align-items-center justify-content-center h-80">
+                <h5 class="my-0 font-weight-normal text-truncate">Предметы студента</h5>
+            </div>
+            <div class="card-body flex-column">
+                  <div class="row align-items-start">
+                      <ul>
+                          {% for subject in subjects %}
+                            <li>{{ subject }}</li>
+                          {% endfor %}
+                      </ul>
+                  </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
